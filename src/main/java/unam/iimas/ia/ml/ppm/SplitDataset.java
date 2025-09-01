@@ -15,13 +15,13 @@ public class SplitDataset {
         try {
             // 1) Resolver rutas
             String userHome = System.getProperty("user.home");
-            Path downloads = Paths.get(userHome, "Downloads" +File.separator + "winequality");
+            Path downloads = Paths.get("src"+ File.separator + "main" + File.separator + "resources");
 
             // Nombre de archivo y % de entrenamiento (opcionales por CLI)
             String inputFileName = (args.length >= 1) ? args[0] :  DEFAULT_FILE_NAME;
             int percentTrain = (args.length >= 2) ? parsePercent(args[1]) : DEFAULT_PERCENT_TRAIN;
 
-            Path inputPath = downloads.resolve(inputFileName);
+            Path inputPath = Paths.get("src"+ File.separator + "main" + File.separator + "resources" + File.separator + DEFAULT_FILE_NAME);
 
             if (!Files.exists(inputPath) || !Files.isRegularFile(inputPath)) {
                 System.err.println("No se encontró el archivo: " + inputPath.toAbsolutePath());

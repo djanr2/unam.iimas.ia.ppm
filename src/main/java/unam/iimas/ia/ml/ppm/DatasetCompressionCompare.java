@@ -19,14 +19,14 @@ public class DatasetCompressionCompare {
         int ppmOrder = (args.length >= 3) ? parseInt(args[2], PPM_ORDER) : PPM_ORDER;
 
         String home = System.getProperty("user.home");
-        Path downloads = Paths.get(home, "Downloads"+File.separator + "winequality");
+        Path filePath = Paths.get("src"+ File.separator + "main" + File.separator + "resources");
 
         // Rutas del archivo original y de sus derivados TRN_/TST_
-        Path original = downloads.resolve(fileName);
+        Path original = Paths.get("src"+ File.separator + "main" + File.separator + "resources" + File.separator + DEFAULT_FILE_NAME);
         String base = baseName(fileName);
         String ext = extension(fileName);
-        Path trnFile = downloads.resolve("TRN_" + base + ext);
-        Path tstFile = downloads.resolve("TST_" + base + ext);
+        Path trnFile = filePath.resolve("TRN_" + base + ext);
+        Path tstFile = filePath.resolve("TST_" + base + ext);
 
         // 1) Dividir con SplitDataset (quita encabezado y escribe TRN_ y TST_)
         System.out.println("=== División de dataset ===");
@@ -36,7 +36,7 @@ public class DatasetCompressionCompare {
 
         // 2) Comprimir original, TRN y TST con Ppm
         System.out.println("\n=== Compresión con Ppm (orden " + ppmOrder + ") ===");
-        Path originalCompressed = changeExtension(downloads.resolve(base + ext), COMPRESSED_EXT);
+        Path originalCompressed = changeExtension(filePath.resolve(base + ext), COMPRESSED_EXT);
         Path trnCompressed = changeExtension(trnFile, COMPRESSED_EXT);
         Path tstCompressed = changeExtension(tstFile, COMPRESSED_EXT);
 
@@ -68,9 +68,9 @@ public class DatasetCompressionCompare {
         System.out.println("  Ruta: " + tstFile);
         System.out.println("  Tamaño: " + tstSize + "  Comprimido: " + tstComp + "  Ratio: " + df3.format(rTst) + "  (Reducción: " + df2.format((1 - rTst) * 100) + "%)");
 
-        System.out.println("\n=== Comparación de tasas (ratio) ===");
-        compareRatios("Original vs TRN", rOrig, rTrn, df3, df2);
-        compareRatios("Original vs TST", rOrig, rTst, df3, df2);
+        //System.out.println("\n=== Comparación de tasas (ratio) ===");
+        //compareRatios("Original vs TRN", rOrig, rTrn, df3, df2);
+        //compareRatios("Original vs TST", rOrig, rTst, df3, df2);
 
         System.out.println("\nArchivos comprimidos creados:");
         System.out.println("  " + originalCompressed.toAbsolutePath());
